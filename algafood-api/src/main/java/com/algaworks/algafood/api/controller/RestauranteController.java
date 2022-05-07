@@ -42,7 +42,7 @@ public class RestauranteController {
 	private RestauranteModelAssembler restauranteModelAssembler;
 
 	@Autowired
-	private RestauranteDisassembler restauranteDisassembler;
+	private RestauranteDisassembler restauranteDisassembler; 
 
 	@GetMapping
 	public List<RestauranteModel> listar() {
