@@ -1,4 +1,4 @@
-package com.algaworks.algafood.api.dissembler;
+package com.algaworks.algafood.api.disassembler;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 
 @Component
-public class RestauranteDissembler {
+public class RestauranteDisassembler {
 	
 	public Restaurante toDomainObject(RestauranteInput restauranteInput) {
 		Restaurante restaurante = new Restaurante();
