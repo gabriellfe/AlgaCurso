@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,8 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 @RequestMapping(value = "/restaurantes")
 public class RestauranteController {
 
+	private static final Logger logger = LoggerFactory.getLogger(RestauranteController.class);
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 
@@ -42,7 +46,7 @@ public class RestauranteController {
 	private RestauranteModelAssembler restauranteModelAssembler;
 
 	@Autowired
-	private RestauranteDisassembler restauranteDisassembler; 
+	private RestauranteDisassembler restauranteDisassembler;
 
 	@GetMapping
 	public List<RestauranteModel> listar() {
@@ -52,7 +56,7 @@ public class RestauranteController {
 	@GetMapping("/{restauranteId}")
 	public RestauranteModel buscar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
+		logger.info("Buscou restaurante id: " + restauranteId + " nome: " + restaurante.getNome());
 		return restauranteModelAssembler.toModel(restaurante);
 	}
 
@@ -60,9 +64,8 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
 		try {
-			Restaurante restaurante = restauranteDisassembler.toDomainObject(restauranteInput);
-
-			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
+			return restauranteModelAssembler
+					.toModel(cadastroRestaurante.salvar(restauranteDisassembler.toDomainObject(restauranteInput)));
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
