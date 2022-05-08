@@ -97,11 +97,11 @@ foreign key (cozinha_id) references cozinha (id);
 alter table restaurante add constraint fk_restaurante_cidade
 foreign key (endereco_cidade_id) references cidade (id);
 
-alter table restaurante_forma_pagamento add constraint fk_rest_forma_pagto_restaurante
-foreign key (restaurante_id) references restaurante (id);
-
 alter table restaurante_forma_pagamento add constraint fk_rest_forma_pagto_forma_pagto
 foreign key (forma_pagamento_id) references forma_pagamento (id);
+
+alter table restaurante_forma_pagamento add constraint fk_rest_forma_pagto_restaurante
+foreign key (restaurante_id) references restaurante (id);
 
 alter table usuario_grupo add constraint fk_usuario_grupo_grupo
 foreign key (grupo_id) references grupo (id);
